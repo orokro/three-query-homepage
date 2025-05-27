@@ -9,6 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-container": "^4.0.0",
+    "markdown-it-emoji": "^3.0.0",
+    "three": "^0.176.0",
+    "three-query": "^0.9.2",
     "vue": "^3.5.13"
   },
   "devDependencies": {
