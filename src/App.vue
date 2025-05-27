@@ -13,13 +13,12 @@
 </template>
 <script setup>
 
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 import TheDocs from './components/TheDocs.vue';
 
 </script>
 
-<style scoped>
+<style lang="scss">
+
 	header {
 		line-height: 1.5;
 	}
@@ -46,4 +45,58 @@ import TheDocs from './components/TheDocs.vue';
 			flex-wrap: wrap;
 		}
 	}
+
+	// add gradient & titled images to main page background
+	body {
+
+		/* background: linear-gradient(#5e5e5e, #000);
+		background-position: fixed; */
+
+		// use pseudo element to add a vertical gradient that doesn't scroll with content
+		&::before {
+
+			// required content to make pseudo element work
+			content: "";
+
+			// fill screen
+			position: fixed;
+			inset: 0px 0px 0px 0px;
+			width: 100vw;
+			height: 100vh;
+
+			// just a nice gradient
+			background: linear-gradient(#AAA, #000);
+
+			// always on bottom, no interaction
+			z-index: -1;
+			pointer-events: none;	
+		}
+
+		// use another pseudo element to add a tiled background image
+		// that doesn't scroll with content
+		&::after {
+
+			// required content to make pseudo element work
+			content: "";
+			opacity: 0.33;
+			// fill screen
+			position: fixed;
+			inset: 0px 0px 0px 0px;
+			width: 100vw;
+			height: 100vh;
+
+			// tiled background image over the screen
+			background-image: url('img/bg_tiles.png');
+			background-size: 150px;
+			background-repeat: repeat;
+			background-position: center;
+
+			// always on bottom, no interaction
+			z-index: -1;
+			pointer-events: none;	
+
+		}// &::after
+
+	}// body
+
 </style>

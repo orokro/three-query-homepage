@@ -1,67 +1,70 @@
-<!-- 
-	TheDocs.vue
-	-----------
+<!--
+	App.vue
+	-------
 
-	File to show the documentation from a markdown file.
+	Main entry point to the website
 -->
 <template>
-	<section class="markdown-body" v-html="renderedMarkdown"></section>
+	<div class="markdown-box">
+		<section class="markdown-body" v-html="renderedMarkdown"></section>
+	</div>
 </template>
-<script>
+
+<script setup>
 
 // vue
-import { defineComponent, ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 
-// mark down librar
+// markdown library
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import '@/assets/markdown.css'
 
-// the actual markdown file we wanna render
+// the actual markdown file to render
 import rawMd from '../docs.md?raw'
 
-/**
- * Build the compontent
- */
-export default defineComponent({
+// the code rendered
+const renderedMarkdown = ref('')
 
-	// Component name
-	name: 'TheDocs',
+// set up mark down renderer when we mount the component
+onMounted(async () => {
 
-	// set up the component
-	setup() {
-		const renderedMarkdown = ref('')
+	// emoji errors, ignored for now
+	const emoji = await import('markdown-it-emoji').then(m => m.default || m)
+	const container = await import('markdown-it-container').then(m => m.default || m)
+	const anchor = await import('markdown-it-anchor').then(m => m.default || m)
 
-		const initMarkdown = async () => {
-			const emoji = await import('markdown-it-emoji').then(m => m.default || m)
-			const container = await import('markdown-it-container').then(m => m.default || m)
-			const anchor = await import('markdown-it-anchor').then(m => m.default || m)
-
-			const md = new MarkdownIt({
-				html: true,
-				linkify: true,
-				typographer: true,
-				highlight: (str, lang) => {
-					let clean = str.replace(/^\s*\n/, '').replace(/\s+$/, '') // Remove leading blank lines + trailing whitespace
-					clean = clean.trimStart();
-					if (lang && hljs.getLanguage(lang)) {
-						try {
-							return `<pre class="hljs"><code>${hljs.highlight(clean, { language: lang }).value}</code></pre>`
-						} catch (_) { }
-					}
-					return `<pre class="hljs"><code>${md.utils.escapeHtml(clean)}</code></pre>`
-				}
-			})
-				.use(container, 'tip')
-				.use(anchor);
-
-			renderedMarkdown.value = md.render(rawMd)
+	const md = new MarkdownIt({
+		html: true,
+		linkify: true,
+		typographer: true,
+		highlight: (str, lang) => {
+			let clean = str.replace(/^\s*\n/, '').replace(/\s+$/, '').trimStart()
+			if (lang && hljs.getLanguage(lang)) {
+				try {
+					return `<pre class="hljs"><code>${hljs.highlight(clean, { language: lang }).value}</code></pre>`
+				} catch (_) {}
+			}
+			return `<pre class="hljs"><code>${md.utils.escapeHtml(clean)}</code></pre>`
 		}
+	})
+	.use(container, 'tip')
+	.use(anchor);
 
-		initMarkdown()
-
-		return { renderedMarkdown }
-	},
+	renderedMarkdown.value = md.render(rawMd);
 });
+
 </script>
+<style lang="scss" scoped>
+
+	.markdown-box {
+
+		background: white;
+
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 20px;
+	}
+
+</style>
