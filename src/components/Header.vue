@@ -56,30 +56,20 @@
 			<div 
 				ref="navHighlight"
 				class="nav-highlight"
+				:style="{
+					left: highlightDimensions.left, 
+					width: highlightDimensions.width
+				}"
 			/>
+
+			<!-- loop to generate links -->
 			<div 
-				class="nav-item l_demo"
-				@click="moveHighlight($event.currentTarget.parentElement, 'l_demo')"
+				v-for="link in links"
+				:key="link.slug"
+				:class="`nav-item ${link.slug} ${currentLink === link.slug ? 'active' : ''}`"
+				@click="gotoLink(link.slug)"
 			>
-				<span>Demo</span>
-			</div>
-			<div 
-				class="nav-item l_overview"
-				@click="moveHighlight($event.currentTarget.parentElement, 'l_overview')"
-			>
-				<span>Overview</span>
-			</div>
-			<div 
-				class="nav-item l_get"
-				@click="moveHighlight($event.currentTarget.parentElement, 'l_get')"
-			>
-				<span>Get</span>
-			</div>
-			<div 
-				class="nav-item l_docs"
-				@click="moveHighlight($event.currentTarget.parentElement, 'l_docs')"
-			>
-				<span>Docs</span>
+				<span>{{ link.label }}</span>
 			</div>
 		</div>
 
@@ -89,34 +79,77 @@
 <script setup>
 
 // vue
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 // elements
 const navItems = ref([]);
 const navHighlight = ref(null);
 
-function moveHighlight(containerEl, clickedClassName) {
+// the size & position of our dynamic highlight element
+const hlLeftPos = ref(0);
+const hlWidth = ref(0);
 
-	const containerRect = containerEl.getBoundingClientRect();
-	const targetEl = containerEl.querySelector(`.${clickedClassName}`);
-	const highlightEl = containerEl.querySelector('.nav-highlight');
+// store currently selected link
+const currentLink = ref('l_demo');
 
-	if (targetEl && highlightEl) {
+// our link details
+const links = [
+	{ slug: 'l_demo', label: 'Demo' },
+	{ slug: 'l_overview', label: 'Overview' },
+	{ slug: 'l_get', label: 'Get' },
+	{ slug: 'l_docs', label: 'Docs' }
+];
+
+
+/**
+ * Goes to the link
+ * 
+ * @param linkSlugName {string} - the slug name of the link to highlight
+ */
+function gotoLink(linkSlugName) {
+
+	// save our slunk
+	currentLink.value = linkSlugName;
+}
+
+
+// dynamically compute the left/width of the highlight
+const highlightDimensions = computed(() => {
+
+	try {
+		// get the parent container dom element
+		const containerEl = navItems.value;
+
+		// find the DOM element to move to
+		const containerRect = containerEl.getBoundingClientRect();
+		const targetEl = containerEl.querySelector(`.${currentLink.value}`);
 		const targetRect = targetEl.getBoundingClientRect();
 
+		// compute local left and width
 		const left = targetRect.left - containerRect.left;
 		const width = targetRect.width;
 
-		highlightEl.style.width = `${width}px`;
-		highlightEl.style.left = `${left}px`;
+		return {
+			left:  `${left}px`,
+			width: `${width}px`
+		};
+	}catch(e){
+		return {
+			left: '0px',
+			width: '0px'
+		}
 	}
-}
+});
+
 
 </script>
 <style lang="scss" scoped>
 
 	// outer most box
 	.header {
+
+		// disable text highlighting
+		user-select: none;
 
 		// fixed on top
 		position: fixed;
@@ -173,11 +206,11 @@ function moveHighlight(containerEl, clickedClassName) {
 				user-select: none;
 				-webkit-user-drag: none;
 				
-				transform: scaleY(-1.0) ;
 			}// .logo
 
 		}// .logo-circle
 
+		// text that says "ThreeQuery" next to the logo
 		.logo-text {
 
 			// fixed position next to logo image
@@ -281,14 +314,20 @@ function moveHighlight(containerEl, clickedClassName) {
 				cursor: pointer;
 				
 				// text styles
-				color: white;
+				color: #0fc9cc;
 				font-weight: bold;
+				transition: color 0.3s ease;
 
 				span {
 					position: relative;
 					top: -3px;
 					font-weight: inherit;
 				}// span
+
+				&:hover, &.active {
+					color: white;
+					font-weight: bolder;
+				}
 				
 			}// .nav-item
 			
