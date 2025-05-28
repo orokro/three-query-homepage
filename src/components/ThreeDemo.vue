@@ -59,6 +59,7 @@ import DemoThreeScene from '@/js/DemoThreeScene';
 // dom elements
 const containerEl = ref(null);
 
+// store the query text
 const queryText = ref('');
 
 // the JS logic to manipulate the 3D scene
@@ -85,9 +86,10 @@ const enableToolTip = ref(false);
 function checkUnderCursor(e){
 
 	// get the location position over the element
+	const rect = containerEl.value.getBoundingClientRect();
 	toolTipPos.value = {
-		left: e.clientX - 10,
-		top: e.clientY + 20
+		left: e.clientX - rect.left - 10,
+		top: e.clientY - rect.top + 20
 	};
 
 	// ray cast under the cursor x/y & gtfo if nothing found
