@@ -6,10 +6,15 @@
 -->
 <template>
 
-	<Header/>
-
+	<!-- box that renders 3D objects & interactively lets you test queries -->
 	<ThreeDemo />
+
+	<!-- markdown parsed & rendered from the readme -->
 	<TheDocs />
+
+	<!-- bar long the top w/ links and whatnot -->
+	<Header/>
+	
 </template>
 <script setup>
 

@@ -35,9 +35,8 @@ export default class DemoThreeScene {
 
 		// continue constructor in our async init method
 		this.init();
-
-
 	}
+
 
 	/**
 	 * Async initialization
@@ -46,6 +45,7 @@ export default class DemoThreeScene {
 
 		// build the scene with our floating 3D objects and all that
 		await this.buildScene();
+		const $ = this.$;
 
 		// load HDR lighting
 		await this.loadHDR();
@@ -53,6 +53,18 @@ export default class DemoThreeScene {
 		// load our demo shapes & add 'em to the scene
 		const obj = await this.tq.loadGeometry('glb', '/demo_shapes.glb');
 		this.sceneDetails.scene.add(obj);
+
+		// cache all the colors for our object in the scene
+		$('*').each((item) => {
+
+			const $item = $(item);
+			const material = $item.material();
+	
+			if(material!==undefined && material.color){
+			item.material = material.clone();
+				item.initial_color = material.color.clone();
+			}
+		});
 
 		// scale up our base size
 		const scale = 2.0;
@@ -67,6 +79,7 @@ export default class DemoThreeScene {
 	 * Loads an HDR environment map and sets it for lighting/reflections.
 	 */
 	async loadHDR() {
+
 		const { scene, renderer } = this.sceneDetails;
 
 		const rgbeLoader = new RGBELoader();
@@ -77,7 +90,6 @@ export default class DemoThreeScene {
 		const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture;
 
 		scene.environment = envMap;
-		// scene.background = envMap; // Optional: comment out if you want transparent background
 
 		hdrTexture.dispose();
 		pmremGenerator.dispose();
@@ -221,4 +233,36 @@ export default class DemoThreeScene {
 	}
 
 
+	queryInput(queryString){
+
+		const $ = this.$;
+
+		// if the string is empty, re-apply all initial colors
+		if(queryString === '') {
+			$('*').each((item) => {
+				const $item = $(item);
+				const initialColor = item.initial_color;
+				if(initialColor) {
+					$item.material({color: initialColor });
+				}
+			});
+			return;
+		}
+
+		// otherwise, make everything gray
+		const grayColor = new THREE.Color(0x888888);
+		$('*').each((item) => {
+			const $item = $(item);
+			$item.material() ? $item.material({color: grayColor }) : null;
+		});
+
+		// console.log('queryInput', queryString);
+		$(queryString).each((item) => {
+				const $item = $(item);
+				const initialColor = item.initial_color;
+				if(initialColor) {
+					$item.material({color: initialColor });
+				}
+			});
+		}
 }
