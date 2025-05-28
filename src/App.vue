@@ -6,14 +6,20 @@
 -->
 <template>
 
-	<header>
-	</header>
+	<Header/>
 
+	<ThreeDemo />
 	<TheDocs />
 </template>
 <script setup>
 
+// vue
+import { ref } from 'vue';
+
+// components
+import Header from './components/Header.vue';
 import TheDocs from './components/TheDocs.vue';
+import ThreeDemo from './components/ThreeDemo.vue';
 
 </script>
 
@@ -51,6 +57,8 @@ import TheDocs from './components/TheDocs.vue';
 
 		/* background: linear-gradient(#5e5e5e, #000);
 		background-position: fixed; */
+
+		overflow-x: hidden;
 
 		// use pseudo element to add a vertical gradient that doesn't scroll with content
 		&::before {
