@@ -12,6 +12,9 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import ThreeQuery from 'three-query';
 
+// our app classes
+import { Floater } from './Floater.js';
+
 // main export
 export default class DemoThreeScene {
 
@@ -25,9 +28,27 @@ export default class DemoThreeScene {
 		// save where we'll mount
 		this.container = parentContainerElement;
 
-		// build the scene with our floating 3D objects and all that
-		this.buildScene();
+		// our array of floaters after we've set up the scene
+		// (floaters = classes to make objects float around)
+		this.floaters = [];
+
+		// continue constructor in our async init method
+		this.init();
+
+		
 	}	
+
+	/**
+	 * Async initialization
+	 */
+	async init(){
+
+		// build the scene with our floating 3D objects and all that
+		await this.buildScene();
+		
+		// set up our floaters now that the scene is built
+		await this.setupFloaters();
+	}
 
 
 	/**
@@ -95,9 +116,47 @@ export default class DemoThreeScene {
 
 
 	/**
+	 * Sets up the floaters in the scene
+	 */
+	async setupFloaters() {
+
+		// #demo-shapes is the empty group holding the children to float
+		const rootContainer = this.$('#demo-shapes').object();
+		const items = rootContainer.children;
+
+		// make a floater for each
+		for(const item of items ) {
+
+			const newFloater = new Floater(item, {
+
+				// bob speed in seconds (random range)
+				bobSpeed: [0.25, 0.5], 
+
+				// phase offset (random range)
+				bobPhaseOffset: [0, Math.PI * 2],
+
+				// bob amplitude (random range)
+				bobAmplitude: [0.01, 0.05],
+
+				// rotation speed in seconds (random range)
+				rotSpeed: [0.5, 1.5],
+			});
+
+			// add to our array
+			this.floaters.push(newFloater);
+
+		}// next item
+	}
+
+
+	/**
 	 * Called every render
 	 */
 	render(){
 
+		// update all the floaters
+		this.floaters.map(floater => floater.update());
+		
 	}
+
 }
