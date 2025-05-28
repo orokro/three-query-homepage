@@ -59,7 +59,7 @@ export default class DemoThreeScene {
 		this.$('#demo-shapes').scale(scale, scale, scale);
 
 		// set up our floaters now that the scene is built
-		await this.setupFloaters();		
+		await this.setupFloaters();
 	}
 
 
@@ -181,7 +181,44 @@ export default class DemoThreeScene {
 
 		// update all the floaters
 		this.floaters.map(floater => floater.update());
-
 	}
+
+
+	/**
+	 * Performs raycasting to detect which 3D object is under the cursor.
+	 * 
+	 * @param {MouseEvent} event - The mousemove event from the DOM.
+	 * @returns {string | string[] | null} The name(s) of intersected objects or null if none.
+	 */
+	cursorRaycast(event) {
+
+		const { camera, renderer, scene } = this.sceneDetails;
+
+		// Calculate normalized device coordinates (-1 to +1) for the pointer
+		const rect = renderer.domElement.getBoundingClientRect();
+		const mouse = new THREE.Vector2(
+			((event.clientX - rect.left) / rect.width) * 2 - 1,
+			-((event.clientY - rect.top) / rect.height) * 2 + 1
+		);
+
+		// Set up raycaster
+		const raycaster = new THREE.Raycaster();
+		raycaster.setFromCamera(mouse, camera);
+
+		// Raycast against all mesh objects
+		const intersects = raycaster.intersectObjects(scene.children, true);
+
+		if (intersects.length === 0) return null;
+
+		const names = intersects.map(hit => hit.object.userData.name).filter(name => name);
+
+		// Return single name or array depending on hit count
+		if (names.length === 1) return names[0];
+		if (names.length > 1) return names;
+
+		// if names are missing
+		return null; 
+	}
+
 
 }
