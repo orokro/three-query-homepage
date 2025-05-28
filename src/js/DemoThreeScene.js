@@ -9,8 +9,9 @@
 
 // threeJS stuffs
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import ThreeQuery from 'three-query';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 // our app classes
 import { Floater } from './Floater.js';
@@ -35,19 +36,51 @@ export default class DemoThreeScene {
 		// continue constructor in our async init method
 		this.init();
 
-		
-	}	
+
+	}
 
 	/**
 	 * Async initialization
 	 */
-	async init(){
+	async init() {
 
 		// build the scene with our floating 3D objects and all that
 		await this.buildScene();
-		
+
+		// load HDR lighting
+		await this.loadHDR();
+
+		// load our demo shapes & add 'em to the scene
+		const obj = await this.tq.loadGeometry('glb', '/demo_shapes.glb');
+		this.sceneDetails.scene.add(obj);
+
+		// scale up our base size
+		const scale = 2.0;
+		this.$('#demo-shapes').scale(scale, scale, scale);
+
 		// set up our floaters now that the scene is built
-		await this.setupFloaters();
+		await this.setupFloaters();		
+	}
+
+
+	/**
+	 * Loads an HDR environment map and sets it for lighting/reflections.
+	 */
+	async loadHDR() {
+		const { scene, renderer } = this.sceneDetails;
+
+		const rgbeLoader = new RGBELoader();
+		const pmremGenerator = new THREE.PMREMGenerator(renderer);
+		pmremGenerator.compileEquirectangularShader();
+
+		const hdrTexture = await rgbeLoader.loadAsync('/venice_sunset_2k.hdr');
+		const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture;
+
+		scene.environment = envMap;
+		// scene.background = envMap; // Optional: comment out if you want transparent background
+
+		hdrTexture.dispose();
+		pmremGenerator.dispose();
 	}
 
 
@@ -58,7 +91,7 @@ export default class DemoThreeScene {
 
 		// build default scene from our Lib!
 		const { scene, lights, cube, camera, renderer } = ThreeQuery.createScene(
-			this.container, 
+			this.container,
 			{
 				autoSize: true,
 				autoRender: true,
@@ -72,7 +105,7 @@ export default class DemoThreeScene {
 		);
 
 		// adjust our lights
-		lights.ambientLight.intensity = 2.5;
+		lights.ambientLight.intensity = 0.5;
 		lights.directionalLight.intensity = 6.5;
 
 		// adjust our fov a bit
@@ -100,14 +133,6 @@ export default class DemoThreeScene {
 			return obj.scene;
 		});
 
-		// load our demo shapes & add 'em to the scene
-		const obj = await this.tq.loadGeometry('glb', '/demo_shapes.glb');
-		scene.add(obj);
-
-		// scale up our base size
-		const scale = 2.0;
-		this.$('#demo-shapes').scale(scale, scale, scale);
-
 		// make the base group a bit bigger
 		window.tq = this.tq;
 		window.$ = this.$;
@@ -125,12 +150,12 @@ export default class DemoThreeScene {
 		const items = rootContainer.children;
 
 		// make a floater for each
-		for(const item of items ) {
+		for (const item of items) {
 
 			const newFloater = new Floater(item, {
 
 				// bob speed in seconds (random range)
-				bobSpeed: [0.25, 0.5], 
+				bobSpeed: [0.25, 0.5],
 
 				// phase offset (random range)
 				bobPhaseOffset: [0, Math.PI * 2],
@@ -152,11 +177,11 @@ export default class DemoThreeScene {
 	/**
 	 * Called every render
 	 */
-	render(){
+	render() {
 
 		// update all the floaters
 		this.floaters.map(floater => floater.update());
-		
+
 	}
 
 }
