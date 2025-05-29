@@ -14,7 +14,7 @@
 	<a id="overview"/>
 	<SectionHeader>Overview</SectionHeader>
 	<br><br>
-	<div align="center">
+	<div align="center" style="min-height: 60vh;">
 		<iframe
 			width="80%"
 			style="width: 80%; aspect-ratio: 16/9;"
@@ -141,7 +141,7 @@ import MDBox from './components/MDBox.vue';
 		/* background: linear-gradient(#5e5e5e, #000);
 		background-position: fixed; */
 
-		overflow-x: hidden;
+		overflow-x: clip;
 
 		// use pseudo element to add a vertical gradient that doesn't scroll with content
 		&::before {

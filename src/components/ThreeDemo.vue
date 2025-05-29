@@ -25,33 +25,39 @@
 			{{ toolTipText }}
 		</div>
 
-		<!-- the input bar to test -->
-		<div class="input-bar">
-			
-			<input 
-				type="text"
-				placeholder="Type a query here..."
-				v-model="queryText"
-				@keyup="demoScene.queryInput($event.target.value)"
-				@focus="boxWasFocused = true"
-			/>
+		<!-- clipping wrapper for the bar, so on mobile it doesn't resize horizontally -->
+		<div class="input-bar-clip-box">
 
-			<div 
-				class="clear-button"
-				:class="{
-					'show': queryText.length > 0
-				}"
-				@click="queryText=''; demoScene.queryInput('')"
-			>
-				<span>&#10005;</span>				
+			<!-- the input bar to test -->
+			<div class="input-bar">
+				
+				<input 
+					type="text"
+					placeholder="Type a query here..."
+					v-model="queryText"
+					@keyup="demoScene.queryInput($event.target.value)"
+					@focus="boxWasFocused = true"
+				/>
+
+				<div 
+					class="clear-button"
+					:class="{
+						'show': queryText.length > 0
+					}"
+					@click="queryText=''; demoScene.queryInput('')"
+				>
+					<span>&#10005;</span>				
+				</div>
+
+				<TryMeBox
+					class="try-me-box"
+					:box-is-focused="boxWasFocused"
+					@query-clicked="handleDemoQueryClicked"
+				/>
 			</div>
-
-			<TryMeBox
-				class="try-me-box"
-				:box-is-focused="boxWasFocused"
-				@query-clicked="handleDemoQueryClicked"
-			/>
+		
 		</div>
+
 	</div>
 </template>
 <script setup>
@@ -197,93 +203,109 @@ onMounted(async () => {
 			
 		}// .tooltip
 
-		// area on the bottom w/ input box
-		.input-bar {
+		.input-bar-clip-box {
 
 			// for debug
 			/* border: 1px solid red; */
 
+			// fixed on bottom
 			position: absolute;
-			bottom: 0px;
-			width: 400px;
-			height: 100px;
-			left: 50%;
-			transform: translateX(-50%);
+			inset: auto 0px 0px 0px;
+			height: 260px;
 
-			// the actual text box
-			input {
+			// so the actual input element doesn't resize the document horizontally on mobile
+			overflow: clip;
+			
+			// area on the bottom w/ input box
+			.input-bar {
 
-				// nice full-width pill w/ shadow
-				width: 100%;
-				padding: 10px 20px;
-				border-radius: 100px;
-				border: 3px solid black;
-				box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.5);
-
-				// spacing
-				padding-right: 45px;
-
-				// text styles
-				font-family: monospace;
-				font-size: 20px;
-
-				&:active, &:focus {
-					outline: 3px solid #00ABAE;
-				}
-
-			}// input
-
-			// button to clear the input
-			.clear-button {
-
-				// not clickable and shrank until active
-				transform: scale(0);
-				pointer-events: none;
-				transition: transform 0.2s ease-in-out;
-				&.show {
-					transform: scale(1);
-					pointer-events: initial;
-				}
-
-				// fixed black circle on the right side
-				position: absolute;
-				top: 10px;
-				right: 10px;
-				width: 30px;
-				height: 30px;
-				border-radius: 50%;
-
-				// clickable
-				cursor: pointer;
-				user-select: none;
-
-				// center the text
-				text-align: center;
-				background: black;
-				color: white;
-				font-weight: bolder;
-				span {
-					position: relative;
-					font-weight: inherit;
-					top: 2px;
-				}
-
-				// light up red on hover
-				&:hover {
-					background: rgb(116, 11, 11);
-				}
-
-			}// .clear-button
-
-			.try-me-box {
+				// for debug
+				/* border: 1px solid red; */
 
 				position: absolute;
-				right: 0;
-				top: 0;
-				transform: translate(100%, -100%);
-			}
+				bottom: 0px;
+				width: 400px;
+				max-width: 50vw;
+				height: 100px;
+				left: 50%;
+				transform: translateX(-50%);
 
-		}// .input-bar
+				// the actual text box
+				input {
+
+					// nice full-width pill w/ shadow
+					width: 100%;
+					padding: 10px 20px;
+					border-radius: 100px;
+					border: 3px solid black;
+					box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.5);
+
+					// spacing
+					padding-right: 45px;
+
+					// text styles
+					font-family: monospace;
+					font-size: 20px;
+
+					&:active, &:focus {
+						outline: 3px solid #00ABAE;
+					}
+
+				}// input
+
+				// button to clear the input
+				.clear-button {
+
+					// not clickable and shrank until active
+					transform: scale(0);
+					pointer-events: none;
+					transition: transform 0.2s ease-in-out;
+					&.show {
+						transform: scale(1);
+						pointer-events: initial;
+					}
+
+					// fixed black circle on the right side
+					position: absolute;
+					top: 10px;
+					right: 10px;
+					width: 30px;
+					height: 30px;
+					border-radius: 50%;
+
+					// clickable
+					cursor: pointer;
+					user-select: none;
+
+					// center the text
+					text-align: center;
+					background: black;
+					color: white;
+					font-weight: bolder;
+					span {
+						position: relative;
+						font-weight: inherit;
+						top: 2px;
+					}
+
+					// light up red on hover
+					&:hover {
+						background: rgb(116, 11, 11);
+					}
+
+				}// .clear-button
+
+				.try-me-box {
+
+					position: absolute;
+					right: 0;
+					top: 0;
+					transform: translate(100%, -100%);
+				}
+
+			}// .input-bar
+
+		} // .input-bar-clip-box
 
 	}// .three-demo
 

@@ -11,65 +11,69 @@
 
 		<!-- gradient -->
 		<div class="bg-horizontal-gradient"/>
+		
+		<div class="box logo-box">
+			<!-- the entire logo will link to github cuz why not -->
+			<a 
+				class="github-link"
+				href="https://github.com/orokro/ThreeQuery"
+				target="_blank"
+			>
 
-		<!-- the entire logo will link to github cuz why not -->
-		<a 
-			class="github-link"
-			href="https://github.com/orokro/ThreeQuery"
-			target="_blank"
-		>
+				<!-- logo -->
+				<div class="logo-circle box-bg-color">
+					<img 
+						class="logo" 
+						src="/logo.png"
+						alt="Logo"
+						width="100%"
+						height="100%"
+					/>
+				</div>
 
-			<!-- logo -->
-			<div class="logo-circle box-bg-color">
-				<img 
-					class="logo" 
-					src="/logo.png"
-					alt="Logo"
-					width="100%"
-					height="100%"
-				/>
-			</div>
+				<!-- logo text -->
+				<h1 class="logo-text box-bg-color">
+					<span>
+						ThreeQuery
+					</span>
+				</h1>
 
-			<!-- logo text -->
-			<h1 class="logo-text box-bg-color">
-				<span>
-					ThreeQuery
-				</span>
-			</h1>
-
-			<!-- box w/ github logo & text -->
-			<div class="github-box">
-				<img 
-					src="/img/github_icon.png"
-					alt="GitHub"
-					height="17px"
-				/>
-				<span>on GitHub</span>
-			</div>
-		</a>
+				<!-- box w/ github logo & text -->
+				<div class="github-box">
+					<img 
+						src="/img/github_icon.png"
+						alt="GitHub"
+						height="17px"
+					/>
+					<span>on GitHub</span>
+				</div>
+			</a>
+		</div>
 
 		<!-- links bar -->
-		<div 
-			ref="navItems"
-			class="nav-container box-bg-color"
-		>
-			<div 
-				ref="navHighlight"
-				class="nav-highlight"
-				:style="{
-					left: highlightDimensions.left, 
-					width: highlightDimensions.width
-				}"
-			/>
-
-			<!-- loop to generate links -->
-			<div 
-				v-for="link in links"
-				:key="link.slug"
-				:class="`nav-item ${link.slug} ${currentLink === link.slug ? 'active' : ''}`"
-				@click="gotoLink(link.slug)"
+		<div class="box nav-box">
+			<div
+				ref="navItems"
+				class="nav-container box-bg-color"
 			>
-				<span>{{ link.label }}</span>
+				<div 
+					ref="navHighlight"
+					class="nav-highlight"
+					:style="{
+						left: highlightDimensions.left, 
+						width: highlightDimensions.width
+					}"
+				/>
+
+				<!-- loop to generate links -->
+				<div 
+					v-for="link in links"
+					:key="link.slug"
+					:class="`nav-item ${link.slug} ${currentLink === link.slug ? 'active' : ''}`"
+					@click="gotoLink(link.slug)"
+				>
+					<span>{{ link.label }}</span>
+				</div>
 			</div>
 		</div>
 
@@ -189,7 +193,8 @@ onUnmounted(() => {
 		// fixed on top
 		position: fixed;
 		inset: 0px 0px auto 0px;
-		height: 80px;
+		min-height: 80px;
+		width: 100vw;
 
 		// dark blur background
 		background: rgba(0, 0, 0, 0.2);
@@ -211,177 +216,210 @@ onUnmounted(() => {
 			background: rgba(0, 0, 0, 0.5);
 		}
 
-		// fixed on top-left
-		.logo-circle {
+		// stack stuff left
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		flex-wrap: wrap;
+		align-items: end;
+
+		// generic styles for the boxes in our flex layout
+		.box {
+			/* border: 1px solid red; */
+			position: relative;
+			flex-grow: 0;
+			flex-shrink: 0;
+			flex-basis: auto;		
+		}// box
+
+		// flex box for header logo
+		.logo-box {
+
+			// fixed size
+			width: 262px;
+			height: 80px;
 
 			// fixed on top-left
-			position: absolute;
-			top: 5px;
-			left: 5px;
-			
-			// black circle
-			width: 65px;
-			height: 65px;
-			border-radius: 50% 50% 5px 50%;
-			
-			padding: 8px;
+			.logo-circle {
 
-			// logo image
-			.logo {
-				
-				// don't allow it to be dragged
-				user-select: none;
-				-webkit-user-drag: none;
-				
-			}// .logo
-
-		}// .logo-circle
-
-		// text that says "ThreeQuery" next to the logo
-		.logo-text {
-
-			// fixed position next to logo image
-			position: absolute;
-			bottom: 7px;
-			left: 74px;
-			height: 40px;
-
-			// pretty corners
-			border-radius: 5px 5px 40px 5px;
-
-			// spacing
-			padding: 0px 20px 0px 5px;
-
-			// text styles
-			color: white;
-			font-weight: bolder;
-			font-style: italic;
-
-			span {
-				position: relative;
-				top: -6px;
-				font-weight: inherit;
-			}
-
-		}// .logo-text
-
-		// clickable box to goto git hob, above / part of the logo
-		.github-box {
-
-			// for debug
-			/* border: 1px solid red; */
-
-			// fixed above the logo
-			position: absolute;
-			top: 9px;
-			left: 78px;
-			height: 22px;
-			width: 120px;
-
-			// padding for logo on left
-			padding: 0px 0px 0px 21px;
-
-			color: #EFEFEF;
-
-			// the logo image
-			img {
+				// fixed on top-left
 				position: absolute;
-				top: 0px;
-				left: 0px;
-			}
+				bottom: 7px;
+				left: 5px;
+				
+				// black circle
+				width: 65px;
+				height: 65px;
+				border-radius: 50% 50% 5px 50%;
+				
+				padding: 8px;
 
-			span {
-				font-weight: inherit;
-				position: relative;
-				top: -4px;
-			}
+				// logo image
+				.logo {
+					
+					// don't allow it to be dragged
+					user-select: none;
+					-webkit-user-drag: none;
+					
+				}// .logo
 
-			&:hover {
+			}// .logo-circle
+
+			// text that says "ThreeQuery" next to the logo
+			.logo-text {
+
+				// fixed position next to logo image
+				position: absolute;
+				bottom: 7px;
+				left: 74px;
+				height: 40px;
+
+				// pretty corners
+				border-radius: 5px 5px 40px 5px;
+
+				// spacing
+				padding: 0px 20px 0px 5px;
+
+				// text styles
 				color: white;
 				font-weight: bolder;
-			}
-
-		}// .github-box
-
-		// nav bar links flex layout
-		.nav-container {
-
-			// fixed near the logo
-			position: absolute;
-			bottom: 8px;
-			left: 263px;
-			height: 40px;
-
-			// fancy styles
-			border-radius: 40px 5px;
-
-			display: flex;
-			overflow: hidden;
-
-			/* background: #f0f0f0; */
-			padding: 10px 0;
-			justify-content: center;
-
-			// nav buttons
-			.nav-item {
-
-				// layout & spacing
-				padding: 0px 20px;
-				position: relative;
-				z-index: 1;
-
-
-				&:nth-child(2) {
-					padding-left: 20px;
-				}
-				&:last-child {
-					padding-right: 25px;
-				}
-				// appear clickable
-				cursor: pointer;
-				
-				// text styles
-				color: #0fc9cc;
-				font-weight: bold;
-				transition: color 0.3s ease;
+				font-style: italic;
 
 				span {
 					position: relative;
-					top: -3px;
+					top: -6px;
 					font-weight: inherit;
-				}// span
+				}
 
-				&:hover, &.active {
+			}// .logo-text
+
+			// clickable box to goto git hob, above / part of the logo
+			.github-box {
+
+				// for debug
+				/* border: 1px solid red; */
+
+				// fixed above the logo
+				position: absolute;
+				top: 12px;
+				left: 78px;
+				height: 22px;
+				width: 120px;
+
+				// padding for logo on left
+				padding: 0px 0px 0px 21px;
+
+				color: #EFEFEF;
+
+				// the logo image
+				img {
+					position: absolute;
+					top: 0px;
+					left: 0px;
+				}
+
+				span {
+					font-weight: inherit;
+					position: relative;
+					top: -4px;
+				}
+
+				&:hover {
 					color: white;
 					font-weight: bolder;
 				}
-				
-			}// .nav-item
-			
-			// highlight to slide left & right when nave selected
-			.nav-highlight {
 
-				// fixed bos
+			}// .github-box
+
+		}// .logo-box
+
+		// nav bar box
+		.nav-box {
+
+			width: 335px;
+			height: 50px;
+
+			// nav bar links flex layout
+			.nav-container {
+
+				// fixed near the logo
 				position: absolute;
-
-				// fill box
-				top: 0px;
-				bottom: 0px;
+				bottom: 8px;
 				left: 0px;
-				width: 82.5px;
+				height: 40px;
 
-				// nice teal styles
-				background: #00ABAE;
-
-				// same shape as .nav-container
+				// fancy styles
 				border-radius: 40px 5px;
 
-				transition: all 0.3s ease;
-				z-index: 0;
+				display: flex;
+				overflow: hidden;
 
-			}// .nav-highlight
-			
-		}// .nav-container
+				/* background: #f0f0f0; */
+				padding: 10px 0;
+				justify-content: center;
+
+				// nav buttons
+				.nav-item {
+
+					// layout & spacing
+					padding: 0px 20px;
+					position: relative;
+					z-index: 1;
+
+
+					&:nth-child(2) {
+						padding-left: 20px;
+					}
+					&:last-child {
+						padding-right: 25px;
+					}
+					// appear clickable
+					cursor: pointer;
+					
+					// text styles
+					color: #0fc9cc;
+					font-weight: bold;
+					transition: color 0.3s ease;
+
+					span {
+						position: relative;
+						top: -3px;
+						font-weight: inherit;
+					}// span
+
+					&:hover, &.active {
+						color: white;
+						font-weight: bolder;
+					}
+					
+				}// .nav-item
+				
+				// highlight to slide left & right when nave selected
+				.nav-highlight {
+
+					// fixed bos
+					position: absolute;
+
+					// fill box
+					top: 0px;
+					bottom: 0px;
+					left: 0px;
+					width: 82.5px;
+
+					// nice teal styles
+					background: #00ABAE;
+
+					// same shape as .nav-container
+					border-radius: 40px 5px;
+
+					transition: all 0.3s ease;
+					z-index: 0;
+
+				}// .nav-highlight
+				
+			}// .nav-container
+
+		}// .nav-box
 
 	}// .header
 	

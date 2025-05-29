@@ -22,9 +22,12 @@ import { ref, onMounted } from 'vue';
 
 	.section-header {
 
+		/* display: none; */
+
 		// fill page width & provide room above
-		width: 100%;
-		box-sizing: content-box;
+		width: 100vw;
+		
+		/* box-sizing: content-box; */
 		margin-top: 150px;
 
 		/* border: 1px solid red; */
