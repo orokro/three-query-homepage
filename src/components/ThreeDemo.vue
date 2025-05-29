@@ -49,7 +49,7 @@
 			<TryMeBox
 				class="try-me-box"
 				:box-is-focused="boxWasFocused"
-				@query-clicked="e=>{queryText = e; demoScene.queryInput(e)}"
+				@query-clicked="handleDemoQueryClicked"
 			/>
 		</div>
 	</div>
@@ -121,6 +121,29 @@ function checkUnderCursor(e){
 }
 
 
+/**
+ * Handle when user clicks one of the demo queries from the TRY ME widget
+ * 
+ * @param query {string} - the query to send to the demo scene
+ */
+function handleDemoQueryClicked(query) {
+
+	// if it's the same one we already have, just clear instead.
+	if(queryText.value === query) {
+		queryText.value = '';
+		demoScene.queryInput('');
+		return;
+	}
+
+	// set the query text
+	queryText.value = query;
+	boxWasFocused.value = true;
+
+	// send it to the demo scene
+	demoScene.queryInput(query);
+}
+
+
 // set up ThreeJS on mounted
 onMounted(async () => {
 
@@ -182,7 +205,7 @@ onMounted(async () => {
 
 			position: absolute;
 			bottom: 0px;
-			width: 500px;
+			width: 400px;
 			height: 100px;
 			left: 50%;
 			transform: translateX(-50%);

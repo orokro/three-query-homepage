@@ -7,14 +7,72 @@
 <template>
 
 	<!-- box that renders 3D objects & interactively lets you test queries -->
+	<a id="demo"/>
 	<ThreeDemo />
 
+	<!-- overview video -->
+	<a id="overview"/>
+	<SectionHeader>Overview</SectionHeader>
+	<br><br>
+	<div align="center">
+		<iframe
+			width="80%"
+			style="width: 80%; aspect-ratio: 16/9;"
+			src="https://www.youtube.com/embed/J8BhTWo7HK4?si=CUQ_pKWe_Kg3wNRh"
+			title="YouTube video player"
+			frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+			allowfullscreen
+		></iframe>
+	</div>
+
 	<!-- markdown parsed & rendered from the readme -->
+	<a id="get"/>
+	<SectionHeader>Get</SectionHeader>
+	<br><br>
+	<div class="get-box">
+		<h2>Get The Library</h2>
+
+		<br><br>
+
+		<div class="row">
+
+			<div class="box">
+				<div>
+					Find it on
+					<a href="https://www.npmjs.com/package/three-query?activeTab=readme" target="_blank">NPM:</a>
+				</div>
+				<a href="https://www.npmjs.com/package/three-query?activeTab=readme" target="_blank">
+					<img class="site-logo" src="/npm_logo.png" alt="NPM Logo" height="70px"/>
+				</a>
+			</div>
+
+			<div class="box">
+				<div>
+					Find it on
+					<a href="https://github.com/orokro/ThreeQuery" target="_blank">GitHub:</a>
+				</div>
+				<a href="https://github.com/orokro/ThreeQuery" target="_blank">
+					<img class="site-logo" src="/github_logo.png" alt="GitHub Logo" height="100px"/>
+				</a>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- markdown parsed & rendered from the readme -->
+	<a id="docs"/>
+	<SectionHeader>Docs</SectionHeader>
+	<br><br>
 	<TheDocs />
 
 	<!-- bar long the top w/ links and whatnot -->
 	<Header/>
-	
+
+	<br><br>
+	<br><br>
+	<br><br>
 </template>
 <script setup>
 
@@ -25,6 +83,7 @@ import { ref } from 'vue';
 import Header from './components/Header.vue';
 import TheDocs from './components/TheDocs.vue';
 import ThreeDemo from './components/ThreeDemo.vue';
+import SectionHeader from './components/SectionHeader.vue';
 
 </script>
 
@@ -109,6 +168,44 @@ import ThreeDemo from './components/ThreeDemo.vue';
 			pointer-events: none;	
 
 		}// &::after
+
+		.get-box {
+
+			background: white;
+
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+
+			.row {
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 20px;
+
+				.box {
+					flex: 1 1 calc(50% - 20px);
+					background: #f0f0f0;
+					border-radius: 10px;
+					padding: 20px;
+					text-align: center;
+
+					// Center content inside the box
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					text-align: center;
+
+					.site-logo {
+						margin-top: 20px;
+					}
+
+				}// .box
+
+			}// .row
+
+		}// .get-box
 
 	}// body
 
