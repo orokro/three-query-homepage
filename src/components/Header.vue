@@ -85,10 +85,6 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 const navItems = ref([]);
 const navHighlight = ref(null);
 
-// the size & position of our dynamic highlight element
-const hlLeftPos = ref(0);
-const hlWidth = ref(0);
-
 // store currently selected link
 const currentLink = ref('demo');
 
@@ -143,10 +139,11 @@ const highlightDimensions = computed(() => {
 });
 
 
+// observe the various anchor tags that match our slugs, so we can auto-scroll the header
 let observer;
-
 onMounted(() => {
 
+	// observer to watch for sections entering the viewport
 	observer = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
@@ -154,10 +151,15 @@ onMounted(() => {
 			}
 		});
 	}, {
+
+		// prevent triggering when the section is only partially visible
 		rootMargin: '10% 0px -40% 0px',
-		threshold: 1 // Trigger when 60% of the section is visible
+
+		// Trigger when 100% of the section is visible
+		threshold: 1,
 	});
 
+	// observe each of the anchor tags w/ matching slug
 	links.forEach(link => {
 		const slug = link.slug;
 		const el = document.getElementById(slug);
@@ -167,6 +169,7 @@ onMounted(() => {
 });
 
 
+// clean up listener, even though we'll probably never unmount the header
 onUnmounted(() => {
 
 	if (observer)
@@ -200,14 +203,6 @@ onUnmounted(() => {
 			// fill container, same as .header
 			position: absolute;
 			inset: 0px 0px 0px 0px;
-
-			/* background: linear-gradient(
-				to right,
-				rgba(0, 0, 0, 0.3) 0%,
-				rgba(0, 0, 0, 0.3) 20%,
-				rgba(0, 0, 0, 0.1) 40%,
-				rgba(0, 0, 0, 0.0) 100%
-			); */
 
 		}// .bg-horizontal-gradient
 
