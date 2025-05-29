@@ -1,8 +1,8 @@
 <!--
-	TheDocs.vue
-	-----------
+	MDBox.vue
+	---------
 
-	Renders the document .md file.
+	Renders markdown w/ our lib
 -->
 <template>
 	<div class="markdown-box">
@@ -13,7 +13,7 @@
 <script setup>
 
 // vue
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, useSlots } from 'vue'
 
 // markdown library
 import MarkdownIt from 'markdown-it'
@@ -22,10 +22,11 @@ import 'highlight.js/styles/github.css'
 import '@/assets/markdown.css'
 
 // the actual markdown file to render
-import rawMd from '../docs.md?raw'
+const slots = useSlots();
 
 // the code rendered
 const renderedMarkdown = ref('')
+
 
 // set up mark down renderer when we mount the component
 onMounted(async () => {
@@ -52,8 +53,26 @@ onMounted(async () => {
 	.use(container, 'tip')
 	.use(anchor);
 
+	const rawMd = extractRawTextFromSlot();
 	renderedMarkdown.value = md.render(rawMd);
 });
+
+
+/**
+ * Extracts raw text from the default slot content.
+ */
+function extractRawTextFromSlot() {
+
+	const slotContent = slots.default?.() || [];
+
+	// Concatenate all text content from the VNodes
+	return slotContent.map(vnode => {
+		if (typeof vnode.children === 'string')
+			return vnode.children;
+		
+		return '';
+	}).join('').trim();
+}
 
 </script>
 <style lang="scss" scoped>

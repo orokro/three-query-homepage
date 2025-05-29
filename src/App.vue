@@ -31,10 +31,26 @@
 	<SectionHeader>Get</SectionHeader>
 	<br><br>
 	<div class="get-box">
-		<h2>Get The Library</h2>
+
+		<h2>Install in your Project:</h2>
+	
+		<br><br>
+		<h3>With NPM:</h3>	
+		<pre class="code">npm install three-query</pre>
+		Then...
+		<pre class="code">import ThreeQuery from 'three-query';</pre>
+
 
 		<br><br>
-
+		<h3>Or use a CDN:</h3>
+		<pre class="code">https://unpkg.com/three-query@latest/dist/three-query.global.js</pre>
+		Then...
+		<pre class="code">import ThreeQuery from 'https://unpkg.com/three-query@latest/dist/three-query.global.js';</pre>
+		Or...
+		<pre class="code">&lt;script src="https://unpkg.com/three-query@latest/dist/three-query.global.js"&gt;&lt;/script&gt;</pre>
+		
+		<br><br>
+		<h2>Check out ThreeQuery over here:</h2>
 		<div class="row">
 
 			<div class="box">
@@ -84,6 +100,7 @@ import Header from './components/Header.vue';
 import TheDocs from './components/TheDocs.vue';
 import ThreeDemo from './components/ThreeDemo.vue';
 import SectionHeader from './components/SectionHeader.vue';
+import MDBox from './components/MDBox.vue';
 
 </script>
 
@@ -173,7 +190,7 @@ import SectionHeader from './components/SectionHeader.vue';
 
 			background: white;
 
-			max-width: 800px;
+			max-width: 1200px;
 			margin: 0 auto;
 			padding: 20px;
 
