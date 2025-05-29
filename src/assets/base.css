@@ -60,7 +60,17 @@
 
 html {
 	scroll-behavior: smooth;
-  }
+	scroll-padding-top: 0px;
+}
+
+
+@media (max-width: 768px) {
+	html {
+		/* more space for taller mobile header */
+		scroll-padding-top: 130px; 
+	}
+}
+
   
 body {
 	min-height: 100vh;
