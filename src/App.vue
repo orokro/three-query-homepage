@@ -43,7 +43,9 @@
 
 		<br><br>
 		<h3>Or use a CDN:</h3>
-		<pre class="code">https://unpkg.com/three-query@latest/dist/three-query.global.js</pre>
+		<a href="https://unpkg.com/three-query@latest/dist/three-query.global.js" target="_blank">
+			<pre class="code">https://unpkg.com/three-query@latest/dist/three-query.global.js</pre>
+		</a>
 		Then...
 		<pre class="code">import ThreeQuery from 'https://unpkg.com/three-query@latest/dist/three-query.global.js';</pre>
 		Or...
@@ -160,7 +162,7 @@ import MDBox from './components/MDBox.vue';
 			z-index: -1;
 			pointer-events: none;	
 		}
-
+	
 		// use another pseudo element to add a tiled background image
 		// that doesn't scroll with content
 		&::after {
@@ -171,8 +173,8 @@ import MDBox from './components/MDBox.vue';
 			// fill screen
 			position: fixed;
 			inset: 0px 0px 0px 0px;
-			width: 100vw;
-			height: 100vh;
+			/* width: 100vw;*/
+			height: 100vh; 
 
 			// tiled background image over the screen
 			background-image: url('img/bg_tiles.png');
@@ -186,44 +188,46 @@ import MDBox from './components/MDBox.vue';
 
 		}// &::after
 
-		.get-box {
-
-			background: white;
-
-			max-width: 1200px;
-			margin: 0 auto;
-			padding: 20px;
-
-			.row {
-				display: flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
-				gap: 20px;
-
-				.box {
-					flex: 1 1 calc(50% - 20px);
-					background: #f0f0f0;
-					border-radius: 10px;
-					padding: 20px;
-					text-align: center;
-
-					// Center content inside the box
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: center;
-					text-align: center;
-
-					.site-logo {
-						margin-top: 20px;
-					}
-
-				}// .box
-
-			}// .row
-
-		}// .get-box
-
 	}// body
+
+	.get-box {
+
+		background: white;
+
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 20px;
+
+		.row {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 20px;
+
+			.box {
+				flex: 1 1 calc(50% - 20px);
+				background: #f0f0f0;
+				border-radius: 10px;
+				padding: 20px;
+				text-align: center;
+
+				// Center content inside the box
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+
+				.site-logo {
+					margin-top: 20px;
+				}
+
+			}// .box
+
+		}// .row
+
+	}// .get-box
+
+	
 
 </style>
