@@ -33,6 +33,7 @@
 				placeholder="Type a query here..."
 				v-model="queryText"
 				@keyup="demoScene.queryInput($event.target.value)"
+				@focus="boxWasFocused = true"
 			/>
 
 			<div 
@@ -45,6 +46,11 @@
 				<span>&#10005;</span>				
 			</div>
 
+			<TryMeBox
+				class="try-me-box"
+				:box-is-focused="boxWasFocused"
+				@query-clicked="e=>{queryText = e; demoScene.queryInput(e)}"
+			/>
 		</div>
 	</div>
 </template>
@@ -53,11 +59,17 @@
 // vue
 import { ref, shallowRef, onMounted } from 'vue'
 
+// components
+import TryMeBox from './TryMeBox.vue';
+
 // app/misc JS
 import DemoThreeScene from '@/js/DemoThreeScene';
 
 // dom elements
 const containerEl = ref(null);
+
+// true after our text box is focused once
+const boxWasFocused = ref(false);
 
 // store the query text
 const queryText = ref('');
@@ -239,6 +251,14 @@ onMounted(async () => {
 				}
 
 			}// .clear-button
+
+			.try-me-box {
+
+				position: absolute;
+				right: 0;
+				top: 0;
+				transform: translate(100%, -100%);
+			}
 
 		}// .input-bar
 
