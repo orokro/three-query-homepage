@@ -79,7 +79,7 @@
 <script setup>
 
 // vue
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 
 // elements
 const navItems = ref([]);
@@ -90,14 +90,14 @@ const hlLeftPos = ref(0);
 const hlWidth = ref(0);
 
 // store currently selected link
-const currentLink = ref('l_demo');
+const currentLink = ref('demo');
 
 // our link details
 const links = [
-	{ slug: 'l_demo', label: 'Demo' },
-	{ slug: 'l_overview', label: 'Overview' },
-	{ slug: 'l_get', label: 'Get' },
-	{ slug: 'l_docs', label: 'Docs' }
+	{ slug: 'demo', label: 'Demo' },
+	{ slug: 'overview', label: 'Overview' },
+	{ slug: 'get', label: 'Get' },
+	{ slug: 'docs', label: 'Docs' }
 ];
 
 
@@ -109,7 +109,8 @@ const links = [
 function gotoLink(linkSlugName) {
 
 	// save our slunk
-	currentLink.value = linkSlugName;
+	// currentLink.value = linkSlugName;
+	window.location.hash = `#${linkSlugName}`;
 }
 
 
@@ -139,6 +140,37 @@ const highlightDimensions = computed(() => {
 			width: '0px'
 		}
 	}
+});
+
+
+let observer;
+
+onMounted(() => {
+
+	observer = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+			currentLink.value = entry.target.id;
+			}
+		});
+	}, {
+		rootMargin: '10% 0px -40% 0px',
+		threshold: 1 // Trigger when 60% of the section is visible
+	});
+
+	links.forEach(link => {
+		const slug = link.slug;
+		const el = document.getElementById(slug);
+		if (el)
+			observer.observe(el);
+	});
+});
+
+
+onUnmounted(() => {
+
+	if (observer)
+		observer.disconnect();
 });
 
 
