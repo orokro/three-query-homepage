@@ -215,7 +215,7 @@ onMounted(async () => {
 
 			// so the actual input element doesn't resize the document horizontally on mobile
 			overflow: clip;
-			
+
 			// area on the bottom w/ input box
 			.input-bar {
 
@@ -299,8 +299,8 @@ onMounted(async () => {
 
 					position: absolute;
 					right: 0;
-					top: 0;
-					transform: translate(100%, -100%);
+					bottom: 50px;
+					transform: translate(100%, 0px);
 				}
 
 			}// .input-bar

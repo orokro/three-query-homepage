@@ -17,15 +17,15 @@
 	<div align="center" style="min-height: 60vh;">
 		<iframe
 			width="80%"
-			style="width: 80%; aspect-ratio: 16/9;"
-			src="https://www.youtube.com/embed/J8BhTWo7HK4?si=CUQ_pKWe_Kg3wNRh"
+			style="width: 80%; aspect-ratio: 16/9; max-width: 1200px;"
+			src="https://www.youtube.com/embed/pdj98sUquEM?si=1bbF55CglEGD84r1"
 			title="YouTube video player"
 			frameborder="0"
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
 			allowfullscreen
 		></iframe>
 	</div>
-
+	
 	<!-- markdown parsed & rendered from the readme -->
 	<a id="get"/>
 	<SectionHeader>Get</SectionHeader>

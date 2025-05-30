@@ -10,7 +10,12 @@
 	<div class="try-me-box">
 
 		<!-- animated arrow on bottom left -->
-		<div class="arrow"/>
+		<div 
+			class="arrow"
+			:class="{
+				hide: boxIsFocused
+			}"
+		/>
 
 		<!-- content -->
 		<div class="content">
@@ -23,6 +28,12 @@
 				Try me!
 			</h2>
 
+			<div 
+				v-if="!boxIsFocused"
+				class="click-target"
+				@click="emit('query-clicked', '.hat')"
+			/>
+			
 			<div 
 				class="text"
 				:class="{
@@ -114,36 +125,44 @@ const emit = defineEmits(['query-clicked']);
 		// animated arrow on the bottom-left
 		.arrow {
 
+			// hide after focus
+			opacity: 1;
+			transition: opacity 0.3s ease-in-out;
+			&.hide {
+				opacity: 0.0;
+			}
+
 			// for debug
 			/* border: 1px solid red; */
 			// fixed on bottom
 			position: absolute;
-			bottom: -10px;
-			left: -10px;
+			bottom: 65px;
+			left: -100px;
 
 			// animated
 			animation: arrow-ani 4s ease-in-out infinite;
 
 			// fixed size
-			width: 109px;
-			height: 109px;
+			width: 148px;
+			height: 111px;
 
 			// load bg image
 			background-image: url('/try_me_arrow.png');
 			background-size: 100% 100%;
 			background-repeat: no-repeat;
 
+			transform-origin: bottom right;
 			@keyframes arrow-ani {
 				0%{
-					transform: translateX(0px) translateY(0px);
+					transform: rotate(-10deg) scale(0.75);
 				}
 
 				50%{
-					transform: translateX(-10px) translateY(10px);
+					transform: rotate(-15deg) scale(0.75);
 				}
 
 				100%{
-					transform: translateX(0px) translateY(0px);
+					transform: rotate(-10deg) scale(0.75);
 				}
 			}
 
@@ -197,6 +216,19 @@ const emit = defineEmits(['query-clicked']);
 					}
 				}
 			}
+
+			// invisible panel to allow clicks while "TRY ME" is shown
+			.click-target {
+
+				// clickable
+				pointer-events: initial;
+				cursor: pointer;
+
+				// fill container
+				position: absolute;
+				inset: 0px 0px 0px 0px;
+
+			}// .click-target
 
 			// text box
 			.text {
