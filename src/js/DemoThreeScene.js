@@ -127,7 +127,7 @@ export default class DemoThreeScene {
 		renderer.setClearColor(0x000000, 0);
 
 		// save to our globals
-		this.tq = new ThreeQuery(scene);
+		this.tq = new ThreeQuery(scene, renderer, camera);
 		this.$ = this.tq.$.bind(this.tq);
 		this.sceneDetails = {
 			scene,
