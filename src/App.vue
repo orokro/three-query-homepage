@@ -130,6 +130,7 @@
 
 	<br><br>
 	<br><br>
+	<div class="copy-right">&copy; Greg Miller / Orokro, 2025</div>
 	<br><br>
 </template>
 <script setup>
@@ -276,7 +277,7 @@ import MDBox from './components/MDBox.vue';
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 20px;
-		
+
 		// slightly bigger
 		font-size: 1.2rem;
 
@@ -295,6 +296,10 @@ import MDBox from './components/MDBox.vue';
 		}// .cmd
 
 	}// .overview-box
-	
 
+	.copy-right {
+		text-align: center;
+		color: white;
+	}
+	
 </style>
