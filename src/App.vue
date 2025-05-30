@@ -14,16 +14,56 @@
 	<a id="overview"/>
 	<SectionHeader>Overview</SectionHeader>
 	<br><br>
-	<div align="center" style="min-height: 60vh;">
-		<iframe
-			width="80%"
-			style="width: 80%; aspect-ratio: 16/9; max-width: 1200px;"
-			src="https://www.youtube.com/embed/pdj98sUquEM?si=1bbF55CglEGD84r1"
-			title="YouTube video player"
-			frameborder="0"
-			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
-			allowfullscreen
-		></iframe>
+	<div class="overview-box">
+
+		<h2>ThreeQuery In a Nutshell:</h2>
+		<br>
+		<p>Imagine in Blender you build a scene hierarchy:</p>
+		<br>
+		<img src="/img/blender_screen.png" width="100%"/>
+
+		<br><br>
+		<p>
+			Notice how you can add <span class="cmd">#id-names</span> and <span class="cmd">.class-names</span>
+			to objects, just by adding to their name in Blender:
+			<br>(or your application of choice*)
+		</p>
+		<img src="/img/blender_names.png" width="100%"/>
+
+		<br><br>
+		After you export the Blender scene as <span class="cmd">MonkeyScene.glb</span>,
+		you can then import using ThreeQuery, like so:
+		<br><br>
+		<img src="/img/load_monkeys.png" width="100%"/>
+
+		<br><br>
+		By using the <span class="cmd">.loadGeometry</span> method, all the loaded objects are scaned for the <span class="cmd">#id-names</span> and <span class="cmd">.class-names</span> provided in the Blender scene hierarchy.
+		<br><br>
+		Now you can do easy & fun stuff, with jQuery like syntax:
+		<br><br>
+		<img src="/img/code_sample.png" width="100%"/>
+		<br><br>
+		<em>*Note: in order for ThreeQuery to find the <span class="cmd">#id-names</span> and <span class="cmd">.class-names</span> in your scene, you need to add them to the name of the objects in your 3D application of choice. When you export the file, they must appear on the "userData.name" field of the imported ThreeJS model. Exporting a GLTF/GLB from Blender does this by default, other applications may or may not.</em>
+
+		<br><br>
+		<br><br>
+		<h2>ThreeQuery Tutorial:</h2>
+		<br>
+		<p>
+			Below is a full tutorial for how to get started with Blender + ThreeQuery!
+		</p>
+		<br>
+		<div align="center" style="min-height: 60vh;">
+			<iframe
+				width="100%"
+				style="width: 100%; aspect-ratio: 16/9; max-width: 1200px;"
+				src="https://www.youtube.com/embed/pdj98sUquEM?si=1bbF55CglEGD84r1"
+				title="YouTube video player"
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+				allowfullscreen
+			></iframe>
+		</div>
 	</div>
 	
 	<!-- markdown parsed & rendered from the readme -->
@@ -61,7 +101,7 @@
 					<a href="https://www.npmjs.com/package/three-query?activeTab=readme" target="_blank">NPM:</a>
 				</div>
 				<a href="https://www.npmjs.com/package/three-query?activeTab=readme" target="_blank">
-					<img class="site-logo" src="/npm_logo.png" alt="NPM Logo" height="70px"/>
+					<img class="site-logo" src="/img/npm_logo.png" alt="NPM Logo" height="70px"/>
 				</a>
 			</div>
 
@@ -71,7 +111,7 @@
 					<a href="https://github.com/orokro/ThreeQuery" target="_blank">GitHub:</a>
 				</div>
 				<a href="https://github.com/orokro/ThreeQuery" target="_blank">
-					<img class="site-logo" src="/github_logo.png" alt="GitHub Logo" height="100px"/>
+					<img class="site-logo" src="/img/github_logo.png" alt="GitHub Logo" height="100px"/>
 				</a>
 			</div>
 
@@ -228,6 +268,33 @@ import MDBox from './components/MDBox.vue';
 
 	}// .get-box
 
+	// the overview section
+	.overview-box {
+
+		background: white;
+
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 20px;
+		
+		// slightly bigger
+		font-size: 1.2rem;
+
+		// the code cmd inline elements
+		.cmd {
+
+			// dark themed pill
+			background: rgba(0, 0, 0, 0.7);			
+			padding: 0px 15px;
+			border-radius: 50px;
+
+			// text styles
+			font-family: monospace;
+			font-weight: bolder;
+			color: white;
+		}// .cmd
+
+	}// .overview-box
 	
 
 </style>

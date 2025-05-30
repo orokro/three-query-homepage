@@ -24,7 +24,7 @@
 				<div class="logo-circle box-bg-color">
 					<img 
 						class="logo" 
-						src="/logo.png"
+						src="/img/logo.png"
 						alt="Logo"
 						width="100%"
 						height="100%"
@@ -373,6 +373,7 @@ onUnmounted(() => {
 					&:last-child {
 						padding-right: 25px;
 					}
+
 					// appear clickable
 					cursor: pointer;
 					

@@ -147,7 +147,7 @@ const emit = defineEmits(['query-clicked']);
 			height: 111px;
 
 			// load bg image
-			background-image: url('/try_me_arrow.png');
+			background-image: url('/img/try_me_arrow.png');
 			background-size: 100% 100%;
 			background-repeat: no-repeat;
 
