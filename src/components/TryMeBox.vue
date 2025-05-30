@@ -46,8 +46,8 @@
 					<li>
 						<span 
 							class="cmd" 
-							@click="emit('query-clicked', '.ball .red')"
-							>.ball .red</span>
+							@click="emit('query-clicked', '.ball.red')"
+							>.ball.red</span>
 					</li>
 					<li>
 						<span 
