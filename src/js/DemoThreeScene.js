@@ -51,7 +51,7 @@ export default class DemoThreeScene {
 		await this.loadHDR();
 
 		// load our demo shapes & add 'em to the scene
-		const obj = await this.tq.loadGeometry('glb', '/demo_shapes.glb');
+		const obj = await this.tq.loadGeometry('glb', 'demo_shapes.glb');
 		this.sceneDetails.scene.add(obj);
 
 		// cache all the colors for our object in the scene
@@ -86,7 +86,7 @@ export default class DemoThreeScene {
 		const pmremGenerator = new THREE.PMREMGenerator(renderer);
 		pmremGenerator.compileEquirectangularShader();
 
-		const hdrTexture = await rgbeLoader.loadAsync('/venice_sunset_2k.hdr');
+		const hdrTexture = await rgbeLoader.loadAsync('venice_sunset_2k.hdr');
 		const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture;
 
 		scene.environment = envMap;

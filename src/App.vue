@@ -218,7 +218,7 @@ import MDBox from './components/MDBox.vue';
 			height: 100vh; 
 
 			// tiled background image over the screen
-			background-image: url('img/bg_tiles.png');
+			background-image: url('/img/bg_tiles.png');
 			background-size: 150px;
 			background-repeat: repeat;
 			background-position: center;
